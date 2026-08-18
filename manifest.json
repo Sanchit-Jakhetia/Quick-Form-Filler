@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Form Filler",
+  "version": "1.0.0",
+  "description": "Local-only quick form filler for frequently reused values.",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "action": {
+    "default_title": "Quick Form Filler",
+    "default_popup": "dist/popup.html"
+  },
+  "commands": {
+    "toggle-extension": {
+      "suggested_key": {
+        "default": "Alt+V"
+      },
+      "description": "Turn Quick Form Filler on or off"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

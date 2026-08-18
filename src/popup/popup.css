@@ -1,0 +1,147 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111827;
+  color: #f3f4f6;
+}
+
+.popup-shell {
+  width: 360px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.toggle-button {
+  border: 0;
+  border-radius: 6px;
+  background: #15803d;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  min-width: 56px;
+  padding: 7px 10px;
+}
+
+.toggle-button.is-off {
+  background: #6b7280;
+}
+
+.add-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.add-row input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.add-row button,
+.file-row button,
+.file-picker,
+.value-item button {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-row button {
+  background: #2563eb;
+  color: white;
+  padding: 8px 12px;
+}
+
+.file-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.file-picker,
+.file-row button {
+  background: #374151;
+  color: #f3f4f6;
+  padding: 8px 10px;
+  text-align: center;
+  font: inherit;
+  font-size: 13px;
+}
+
+.file-picker input {
+  display: none;
+}
+
+.value-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.value-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #1f2937;
+  border-radius: 6px;
+}
+
+.value-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.value-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.value-actions button {
+  background: #374151;
+  color: #f3f4f6;
+  padding: 6px 8px;
+}
+
+.value-actions .delete {
+  background: #991b1b;
+}
+
+.status {
+  min-height: 20px;
+  color: #cbd5e1;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.inline-edit {
+  width: 100%;
+  background: #0f172a;
+  color: #f9fafb;
+  border: 1px solid #496185;
+  border-radius: 6px;
+  padding: 6px 8px;
+}

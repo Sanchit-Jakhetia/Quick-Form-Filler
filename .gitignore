@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment/editor files
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Personal value files for local imports
+# Keep example templates shareable, but do not commit your real data.
+examples/*.local.txt
+examples/*.local.json
+personal-values*.txt
+personal-values*.json
+quick-form-filler-values.json

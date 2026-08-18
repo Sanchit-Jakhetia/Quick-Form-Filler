@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Form Filler</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup-shell">
+      <div class="header-row">
+        <h1>Quick Form Filler</h1>
+        <button id="toggle-button" class="toggle-button" type="button" aria-pressed="true">On</button>
+      </div>
+
+      <div class="add-row">
+        <input id="value-input" type="text" placeholder="Add a value" aria-label="Add a value" />
+        <button id="add-button" type="button">Add</button>
+      </div>
+
+      <div class="file-row">
+        <label class="file-picker">
+          Import file
+          <input id="import-file" type="file" accept=".txt,.json,text/plain,application/json" />
+        </label>
+        <button id="export-button" type="button">Export JSON</button>
+      </div>
+
+      <div id="status" class="status" aria-live="polite"></div>
+
+      <ul id="value-list" class="value-list"></ul>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
