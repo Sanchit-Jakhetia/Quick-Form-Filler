@@ -24,6 +24,7 @@ Thumbs.db
 # Keep example templates shareable, but do not commit your real data.
 examples/*.local.txt
 examples/*.local.json
+examples/ExtensionData.txt
 personal-values*.txt
 personal-values*.json
 quick-form-filler-values.json

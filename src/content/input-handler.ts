@@ -21,6 +21,7 @@ export type InputTrackerState = {
   results: string[];
   isOpen: boolean;
   isEnabled: boolean;
+  suppressNextInputRefresh: boolean;
   ui: SuggestionUiState;
 };
 
@@ -44,6 +45,16 @@ export function isEligibleInput(element: HTMLElement | null): element is HTMLInp
   return element instanceof HTMLTextAreaElement || element.matches(supportedSelectors);
 }
 
+export function shouldDismissSuggestionsForSelection(
+  input: HTMLInputElement | HTMLTextAreaElement
+): boolean {
+  return (
+    typeof input.selectionStart === 'number' &&
+    typeof input.selectionEnd === 'number' &&
+    input.selectionStart !== input.selectionEnd
+  );
+}
+
 export function buildTrackerState(): InputTrackerState {
   const ui = createSuggestionUi();
   const state: InputTrackerState = {
@@ -53,6 +64,7 @@ export function buildTrackerState(): InputTrackerState {
     results: [],
     isOpen: false,
     isEnabled: true,
+    suppressNextInputRefresh: false,
     ui
   };
 
@@ -61,6 +73,7 @@ export function buildTrackerState(): InputTrackerState {
       return;
     }
 
+    state.suppressNextInputRefresh = true;
     triggerValueSelection(state.activeInput, value);
     closeSuggestions(state);
   };
@@ -128,6 +141,7 @@ export function acceptSelection(state: InputTrackerState): void {
     return;
   }
 
+  state.suppressNextInputRefresh = true;
   triggerValueSelection(state.activeInput, value);
   closeSuggestions(state);
 }
@@ -184,6 +198,12 @@ export function attachInputHandlers(): InputTrackerState {
 
   const onInput = async (event: Event) => {
     if (!state.isEnabled) {
+      closeSuggestions(state);
+      return;
+    }
+
+    if (state.suppressNextInputRefresh) {
+      state.suppressNextInputRefresh = false;
       closeSuggestions(state);
       return;
     }
@@ -247,6 +267,16 @@ export function attachInputHandlers(): InputTrackerState {
     }
   };
 
+  const onSelectionChange = () => {
+    if (!state.activeInput || !state.isOpen) {
+      return;
+    }
+
+    if (shouldDismissSuggestionsForSelection(state.activeInput)) {
+      closeSuggestions(state);
+    }
+  };
+
   const onViewportChange = () => {
     if (state.isOpen && state.activeInput) {
       renderSuggestions(state.ui, state.results, state.activeInput, state.selectedIndex);
@@ -258,6 +288,7 @@ export function attachInputHandlers(): InputTrackerState {
   document.addEventListener('keydown', onKeyDown);
   document.addEventListener('click', onDocumentClick);
   document.addEventListener('focusout', onBlur);
+  document.addEventListener('selectionchange', onSelectionChange);
   window.addEventListener('scroll', onViewportChange, true);
   window.addEventListener('resize', onViewportChange);
   chrome.storage.onChanged?.addListener(onStorageChanged);

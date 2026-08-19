@@ -84,7 +84,9 @@ async function refreshValues(): Promise<void> {
     return;
   }
 
-  const values = await getStoredValues();
+  const values = [...await getStoredValues()].sort((a, b) =>
+    a.localeCompare(b, undefined, { sensitivity: 'base' })
+  );
   listElement.innerHTML = '';
 
   for (const value of values) {

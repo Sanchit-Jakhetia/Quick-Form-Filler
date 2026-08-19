@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { filterSuggestions, rankSuggestions } from '../src/search/search.js';
 import { deduplicateValues } from '../src/storage/storage.js';
+import { shouldDismissSuggestionsForSelection } from '../src/content/input-handler.js';
 
 test('prefix matching is case-sensitive', () => {
   const values = ['Alex Example', 'Alex', 'AlexExample', '120045006789'];
@@ -46,4 +47,20 @@ test('duplicate suggestions are removed only when casing is identical', () => {
 test('stored value deduplication treats different casing as different values', () => {
   const values = deduplicateValues(['Alex', ' alex ', 'ALEX EXAMPLE']);
   assert.deepEqual(values, ['Alex', 'alex', 'ALEX EXAMPLE']);
+});
+
+test('selection changes dismiss suggestions while caret-only changes do not', () => {
+  const input = {
+    selectionStart: 2,
+    selectionEnd: 4
+  } as HTMLInputElement;
+
+  assert.equal(shouldDismissSuggestionsForSelection(input), true);
+
+  const inputWithoutSelection = {
+    selectionStart: 2,
+    selectionEnd: 2
+  } as HTMLInputElement;
+
+  assert.equal(shouldDismissSuggestionsForSelection(inputWithoutSelection), false);
 });
